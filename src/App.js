@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+// while importing components use {} for inline otherwise use default in the exporting file.
+import { useState } from "react";
+import "./App.css";
+import list from "./List";
+import Display from "./Display";
+import Button from "./Display";
+import { Paragraph } from "./Paragraph";
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState("Bikram");
+  const [userArg, setUserArg] = useState(["j", "k", "L"]);
+
+  // Contolled Method
+
+  const handleOnChange = (e) => {
+    console.log(e.target.value);
+    const { value } = e.target;
+    setUser(value);
+  };
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    setUserArg([...userArg, user]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <form onSubmit={handleOnSubmit} action="" className="user-form">
+        <p> {user}</p>
+        <input onChange={handleOnChange} type="text" />
+        <button>Add User</button>
+      </form>
+      <div>
+        <ul>
+          {userArg.map((item, i) => {
+            return <li>{item}</li>;
+          })}
+        </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
